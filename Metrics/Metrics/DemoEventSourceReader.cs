@@ -12,9 +12,20 @@ namespace Metrics
     {
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
+            var counterData = eventData.ToEventCounterData();
+
+            // Only write to console if actual data has been reported
+            if (counterData?.Count == 0)
+                return;
+
             Console.WriteLine(
-                $"Payload for event {eventData.EventName} (id {eventData.EventId}, version {eventData.Version}) : " +
-                $"{string.Join(", ", eventData.FlattenPayload().Select(pl => $"{pl.Key}: {pl.Value}"))}");
+                $"Counter {counterData.Name} reported values " +
+                $"Min: {counterData.Min}, " +
+                $"Max: {counterData.Max}, " +
+                $"Count {counterData.Count}, " +
+                $"Mean {counterData.Mean}, " +
+                $"StandardDeviation: {counterData.StandardDeviation}, " +
+                $"IntervalSec: {counterData.IntervalSec}");
         }
     }
 }

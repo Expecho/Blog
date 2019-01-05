@@ -30,14 +30,12 @@ namespace Metrics
         {
             var stopwatch = Stopwatch.StartNew();
 
-            CustomMetricsEventSource.Log.ReportMethodCalled();
-
             Thread.Sleep(sleepTimeInMs);
 
             stopwatch.Stop();
 
             CustomMetricsEventSource.Log.ReportMethodDurationInMs(stopwatch.ElapsedMilliseconds);
-            CustomMetricsEventSource.Log.ReportMetric("SomeCounter", DateTime.Now.Millisecond);
+            CustomMetricsEventSource.Log.ReportMetric("someCounter", DateTime.Now.Millisecond);
         }
     }
 }
