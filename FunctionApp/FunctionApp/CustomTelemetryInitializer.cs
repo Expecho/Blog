@@ -7,7 +7,7 @@ namespace FunctionApp
 {
     public class CustomTelemetryInitializer : ITelemetryInitializer
     {
-        public static AsyncLocal<string> MyValue = new AsyncLocal<string>();
+        public static readonly AsyncLocal<string> MyValue = new AsyncLocal<string>();
 
         public void Initialize(ITelemetry telemetry)
         {
