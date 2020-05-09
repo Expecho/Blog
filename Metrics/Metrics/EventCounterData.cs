@@ -10,20 +10,20 @@ namespace Metrics
             var payload = (IDictionary<string, object>) eventData.Payload[0];
 
             Name = payload["Name"].ToString();
-            Mean = (float)payload["Mean"];
-            StandardDeviation = (float)payload["StandardDeviation"];
+            Mean = (double)payload["Mean"];
+            StandardDeviation = (double)payload["StandardDeviation"];
             Count = (int)payload["Count"];
             IntervalSec = (float)payload["IntervalSec"];
-            Min = (float)payload["Min"];
-            Max = (float)payload["Max"];
+            Min = (double)payload["Min"];
+            Max = (double)payload["Max"];
         }
 
         public string Name { get; }
-        public float Mean { get; }
-        public float StandardDeviation { get; }
+        public double Mean { get; }
+        public double StandardDeviation { get; }
         public int Count { get; }
         public float IntervalSec { get; }
-        public float Min { get; }
-        public float Max { get; }
+        public double Min { get; }
+        public double Max { get; }
     }
 }

@@ -20,11 +20,13 @@ namespace Metrics
             methodDurationCounter = new EventCounter(nameof(methodDurationCounter), this);
         }
 
+        [NonEvent]
         public void ReportMethodDurationInMs(long milliseconds)
         {
             methodDurationCounter.WriteMetric(milliseconds);
         }
 
+        [NonEvent]
         public void ReportMetric(string name, float value)
         {
             if (!dynamicCounters.TryGetValue(name, out EventCounter counterInstance))
@@ -33,6 +35,12 @@ namespace Metrics
                 dynamicCounters.Add(name, counterInstance);
             }
             counterInstance.WriteMetric(value);
+        }
+
+        [Event(1, Level = EventLevel.Informational)]
+        public void ApplicationStop()
+        {
+            WriteEvent(1);
         }
     }
 }

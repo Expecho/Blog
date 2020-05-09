@@ -17,11 +17,16 @@ namespace Metrics
             };
             reader.EnableEvents(CustomMetricsEventSource.Log, EventLevel.LogAlways, EventKeywords.All, arguments);
 
+            Console.WriteLine("Press any key to start generating logging");
+            Console.ReadKey();
+
             var random = new Random();
             for (int i = 0; i <= 10; i++)
             {
                 SleepingBeauty(random.Next(10, 200));
             }
+
+            CustomMetricsEventSource.Log.ApplicationStop();
 
             Console.ReadKey();
         }
