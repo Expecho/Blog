@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Metrics
 {
@@ -17,18 +18,24 @@ namespace Metrics
             };
             reader.EnableEvents(CustomMetricsEventSource.Log, EventLevel.LogAlways, EventKeywords.All, arguments);
 
-            Console.WriteLine("Press any key to start generating logging");
+            var random = new Random();
+
+            var cts = new CancellationTokenSource();
+
+            Task.Run(() =>
+            {
+                while (!cts.IsCancellationRequested)
+                {
+                    SleepingBeauty(random.Next(10, 200));
+                }
+            });
+
+            Console.WriteLine("Press any key to stop");
             Console.ReadKey();
 
-            var random = new Random();
-            for (int i = 0; i <= 10; i++)
-            {
-                SleepingBeauty(random.Next(10, 200));
-            }
+            cts.Cancel();
 
             CustomMetricsEventSource.Log.ApplicationStop();
-
-            Console.ReadKey();
         }
 
         static void SleepingBeauty(int sleepTimeInMs)
